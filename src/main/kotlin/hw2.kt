@@ -6,12 +6,16 @@ fun main() {
     val inputHeight = readLine()
     val height = tryUserInput2(inputHeight)
 
-    val result = bodyMassIndex(weight, height)
+    val result = weight?.let {
+        if (height != null) {
+            bodyMassIndex(it, height)
+        }
+    }
     print(result)
 }
 
-fun bodyMassIndex(weight: Float?, height: Float?): String {
-    val index = weight!! / (height!! * height!!)
+fun bodyMassIndex(weight: Float, height: Float): String {
+    val index = weight / (height * height)
     return when (index) {
         in 0.0..16.0 -> "Выраженный дифицит массы"
         in 16.1..18.5 -> "Дифицит массы"
