@@ -1,37 +1,16 @@
 fun main() {
-    print("Enter your total sale: ")
-    val userInput = readLine()
-    val totalSale = tryUserInput(userInput)
+    val amount = 200
+    val total = 12_000
 
-    print("Exclusive author press 1, else press 2: ")
-    val exclusive = when (readLine()) {
-        "1" -> true
-        else -> false
-    }
-
-    val fee = calculateFee(totalSale, exclusive)
-    println("Your fee is: $fee%")
+    println("Без флага эксклюзивности: " + calculateFee(amount, total))
+    println("С флагом эксклюзивности: " + calculateFee(amount, total, true))
 }
 
-fun calculateFee(total: Int?, exclusive: Boolean = false): Int {
-    val percent = when (total) {
-        in 0..1000 -> 30
-        in 1001..10000 -> 25
-        in 10001..50000 -> 20
-        else -> 15
-    }
-
-    return when (exclusive) {
-        true -> percent - 5
-        else -> percent
-    }
-}
-
-fun tryUserInput(input: String?): Int? {
-    try {
-        return input?.toInt()
-    } catch (e: Exception) {
-        println("Incorrect input!")
-    }
-    return 0
+fun calculateFee(amount: Int, total: Int, exclusive: Boolean = false): Double {
+    var percent = 15.0
+    if (total < 1000) percent = 30.0
+    else if (total < 10000) percent = 25.0
+    else if (total < 50000) percent = 20.0
+    if (exclusive) percent -= 5.0
+    return (amount.toDouble() / 100) * percent
 }
